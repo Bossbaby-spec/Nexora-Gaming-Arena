@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora Gaming Arena | Vice City Edition</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GTA 6 Display & Core Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,900&family=Chakra+Petch:wght@600;700;800&family=Inter:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        heading: ['Orbitron', 'sans-serif'],
+                        vice: ['"Montserrat"', 'sans-serif'],
+                        tech: ['"Chakra Petch"', 'sans-serif']
+                    },
+                    colors: {
+                        vice: {
+                            pink: '#ff007f',
+                            magenta: '#e100ff',
+                            cyan: '#00f3ff',
+                            gold: '#ffd000',
+                            dark: '#0a0414',
+                            card: 'rgba(18, 9, 36, 0.75)'
+                        },
+                        gaming: { 950: '#06040d', 900: '#110b1f', accent: '#ff0055', cyan: '#00f3ff' }
+                    },
+                    boxShadow: {
+                        'neon-pink': '0 0 25px rgba(255, 0, 127, 0.45)',
+                        'neon-cyan': '0 0 25px rgba(0, 243, 255, 0.45)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #080312; color: #fff; overflow-x: hidden; }
+        .glass-panel { background: rgba(17, 11, 31, 0.75); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-border { box-shadow: 0 0 12px rgba(0, 243, 255, 0.35); border: 1px solid #00f3ff; }
+        .pulse-red { animation: pulseRed 1.5s infinite; }
+        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.5); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 85, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); } }
+
+        /* GTA 6 Vice City Styling */
+        .gta-gradient-text {
+            background: linear-gradient(180deg, #ffffff 0%, #ffcbe5 35%, #ff007f 70%, #850059 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 18px rgba(255, 0, 127, 0.5));
+        }
+        .gta-skew { transform: skew(-7deg); }
+        .vice-badge {
+            background: linear-gradient(135deg, #ff007f, #00f3ff);
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+        }
+        .retro-scanline {
+            background: linear-gradient(rgba(18, 16, 26, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="selection:bg-vice-pink selection:text-white antialiased">
+
+    <!-- ========================================== -->
+    <!-- 1. CUSTOMER FRONTEND (GTA 6 VICE EDITION)  -->
+    <!-- ========================================== -->
+    <div id="customer-view" class="block min-h-screen relative flex flex-col justify-between">
+        
+        <!-- Ambient City Glow -->
+        <div class="fixed inset-0 pointer-events-none z-0">
+            <div class="absolute top-[-10%] left-[-10%] w-[55vw] h-[55vw] rounded-full bg-vice-pink/15 blur-[140px]"></div>
+            <div class="absolute top-[20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-vice-cyan/10 blur-[150px]"></div>
+            <div class="absolute bottom-[-10%] left-[25%] w-[60vw] h-[40vw] rounded-full bg-purple-900/20 blur-[160px]"></div>
+        </div>
+
+        <!-- Top Navigation -->
+        <nav class="fixed top-0 inset-x-0 z-50 glass-panel border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3 gta-skew">
+                    <span class="w-9 h-9 vice-badge flex items-center justify-center font-vice font-black text-black text-xl italic shadow-neon-pink">VI</span>
+                    <div class="flex flex-col">
+                        <span class="font-vice font-black text-2xl tracking-tighter uppercase leading-none italic text-white">
+                            NEXORA<span class="text-vice-pink">.</span>
+                        </span>
+                        <span class="font-tech text-[9px] tracking-[0.35em] text-vice-cyan uppercase font-bold">Vice Arena • Delhi NCR</span>
+                    </div>
+                </div>
+                
+                <!-- Secret Pitch Toggle for Owner System -->
+                <button onclick="toggleView()" class="text-xs font-tech text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 hover:border-vice-pink/50 bg-black/40 px-3.5 py-2 rounded-lg backdrop-blur">
+                    <i class="fa-solid fa-shield-halved text-vice-pink text-xs"></i> 
+                    <span class="hidden sm:inline tracking-wider uppercase font-bold">Owner OS</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="relative pt-36 pb-16 px-6 text-center z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-vice-pink/40 bg-vice-pink/10 backdrop-blur-md mb-6">
+                <span class="w-2 h-2 rounded-full bg-vice-pink animate-ping"></span>
+                <span class="font-tech text-[10px] uppercase tracking-[0.25em] text-pink-300 font-bold">High-Fidelity Esports Lounge</span>
+            </div>
+
+            <h1 class="font-vice font-black text-5xl sm:text-7xl lg:text-8xl gta-skew uppercase tracking-tighter mb-4 leading-[0.9] gta-gradient-text">
+                LEONIDA'S FINEST<br/>
+                <span class="text-white text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-vice-cyan drop-shadow-none">ZERO WAIT.</span>
+            </h1>
+
+            <p class="font-sans text-gray-300 text-sm sm:text-base max-w-xl mx-auto mb-8 font-medium leading-relaxed">
+                Step into Delhi NCR’s premier private console suites. Reserve your battle station in advance and bypass wait times with direct WhatsApp confirmations.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 text-xs font-tech tracking-wider uppercase font-bold text-gray-300">
+                <div class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg">
+                    <i class="fa-solid fa-bolt text-vice-gold"></i> 4K 144Hz OLEDs
+                </div>
+                <div class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg">
+                    <i class="fa-solid fa-wifi text-vice-cyan"></i> Gigabit Low-Latency
+                </div>
+                <div class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg">
+                    <i class="fa-solid fa-couch text-vice-pink"></i> Acoustic Lounges
+                </div>
+            </div>
+        </header>
+
+        <!-- Live Station Showcase Grid -->
+        <main class="max-w-7xl mx-auto px-6 pb-24 z-10 w-full">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="font-vice font-black text-2xl sm:text-3xl text-white gta-skew uppercase tracking-tight">Available Stations</h2>
+                    <p class="font-tech text-xs text-gray-400 tracking-wider uppercase">Select a station to inspect live hourly schedules</p>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 font-tech text-xs text-vice-cyan">
+                    <span class="w-2.5 h-2.5 rounded-full bg-vice-cyan animate-pulse"></span> SYSTEM ONLINE
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="storefront-grid">
+                <!-- Injected dynamically by renderFrontendStorefront() -->
+            </div>
+        </main>
+
+        <!-- Location, Direct Contact & Local Schema -->
+        <section class="max-w-7xl mx-auto px-6 pb-24 z-10 w-full">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 relative overflow-hidden">
+                <div class="absolute right-[-10%] top-[-20%] w-[350px] h-[350px] bg-vice-pink/10 rounded-full blur-[100px] pointer-events-none"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="font-tech text-xs text-vice-pink uppercase font-bold tracking-[0.3em]">Flagship Arena</span>
+                        <h3 class="font-vice font-black text-3xl sm:text-4xl text-white gta-skew uppercase">Connaught Place • Delhi</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed max-w-lg">
+                            Located inside Block C, Connaught Place. Equipped with 4 dedicated private booths, professional direct-drive sim rigs, and VR stations. Open noon till midnight.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-4">
+                            <a href="https://maps.google.com/?q=Connaught+Place+Delhi" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-vice-cyan text-xs font-tech uppercase tracking-widest text-vice-cyan font-bold transition flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot"></i> Directions
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-vice-pink text-xs font-tech uppercase tracking-widest text-vice-pink font-bold transition flex items-center gap-2">
+                                <i class="fa-brands fa-instagram"></i> Official Drops
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-black/50 border border-white/10 p-6 rounded-2xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                            <span class="font-tech text-xs uppercase text-gray-400">Direct Desk WhatsApp</span>
+                            <span class="font-tech text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ACTIVE
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-400">
+                            Custom bookings, multi-hour LAN parties, and corporate arena lockouts are scheduled directly through our desk operator.
+                        </p>
+                        <button onclick="openBookingModal(1)" class="w-full py-3.5 bg-gradient-to-r from-vice-pink to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-vice font-black italic text-xs uppercase tracking-wider rounded-xl transition shadow-neon-pink flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Open Booking Matrix
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/10 bg-black/60 py-6 px-6 z-10">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-tech text-gray-500">
+                <span>© 2026 NEXORA GAMING ARENA • VICE EDITION</span>
+                <span class="tracking-widest uppercase text-[10px]">
+                    Operating System Architecture by <strong class="text-gray-300">Nexora Web</strong>
+                </span>
+            </div>
+        </footer>
+
+        <!-- GTA 6 Themed Booking Modal -->
+        <div id="booking-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+            <div class="glass-panel rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-vice-pink shadow-neon-pink relative overflow-hidden">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <span class="font-tech text-[10px] text-vice-pink uppercase tracking-widest font-bold">Lock Slot (0% Platform Fee)</span>
+                        <h3 id="modal-station-title" class="font-vice font-black text-2xl text-white gta-skew uppercase mt-0.5">Screen 1</h3>
+                    </div>
+                    <button onclick="closeModal('booking-modal')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6 text-sm">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-gray-300 text-xs font-tech uppercase tracking-wider font-bold">Select Hourly Slot (Today)</label>
+                            <span class="text-[10px] font-tech text-vice-cyan uppercase">1 Hour Playtime</span>
+                        </div>
+                        <div id="modal-time-grid" class="grid grid-cols-5 gap-2 mb-2 font-mono text-xs"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-tech">
+                        <div>
+                            <label class="block text-gray-400 text-xs mb-1.5 uppercase font-bold">Title / Game</label>
+                            <select id="cust-input-game" class="w-full bg-[#0a0414] border border-white/15 rounded-xl p-3 text-white text-xs outline-none focus:border-vice-pink transition">
+                                <option>GTA VI (Demo Suite)</option>
+                                <option>Tekken 8</option>
+                                <option>EA FC 26</option>
+                                <option>Forza Motorsport 8</option>
+                                <option>Gran Turismo 7</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xs mb-1.5 uppercase font-bold">Player Name</label>
+                            <input type="text" id="cust-input-name" placeholder="Enter Tag / Name" class="w-full bg-[#0a0414] border border-white/15 rounded-xl p-3 text-white text-xs outline-none focus:border-vice-pink transition">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex gap-3">
+                    <button onclick="closeModal('booking-modal')" class="flex-1 py-3.5 border border-white/15 rounded-xl text-gray-300 text-xs font-tech uppercase font-bold hover:bg-white/5 transition">
+                        Cancel
+                    </button>
+                    <button onclick="generateWhatsApp()" id="whatsapp-btn" class="flex-2 w-2/3 py-3.5 bg-gradient-to-r from-emerald-500 to-[#25D366] hover:from-emerald-400 hover:to-green-400 text-black font-tech font-black uppercase text-xs tracking-wider rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg" disabled>
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Send WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. OWNER SECURE OPERATING SYSTEM           -->
+    <!-- UNTOUCHED BACKEND CODE & ADMIN LOGIC       -->
+    <!-- ========================================== -->
+    <div id="owner-view" class="hidden min-h-screen bg-slate-950 font-sans text-slate-100">
+        <header class="h-20 bg-slate-900/80 backdrop-blur border-b border-slate-800 px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-shield-halved text-gaming-accent text-2xl"></i>
+                <div>
+                    <span class="font-heading font-bold text-lg tracking-wide text-white uppercase block leading-none">Owner Dashboard</span>
+                    <span class="text-[10px] text-emerald-400 font-mono">Evening Shift (17 Sep 2026)</span>
+                </div>
+            </div>
+            <button onclick="toggleView()" class="text-xs text-gray-500 hover:text-white transition flex items-center gap-2 border border-gray-800 px-3 py-1.5 rounded">
+                <i class="fa-solid fa-gamepad"></i> Storefront
+            </button>
+        </header>
+
+        <main class="p-8 space-y-8 flex-1">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 border-l-4 border-l-gaming-accent">
+                    <div class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">Direct Cash Today</div>
+                    <div class="text-3xl font-heading font-black text-white" id="kpi-total-revenue">₹0</div>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 border-l-4 border-l-gaming-cyan">
+                    <div class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">Active Screens Now</div>
+                    <div class="text-3xl font-heading font-black text-white" id="kpi-active-screens">0 / 4</div>
+                </div>
+            </div>
+
+            <!-- TAB 1: PWA Live Matrix -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-heading font-bold text-white">Live Station Matrix (16:00 Hour)</h3>
+                    <p class="text-xs text-slate-400">Start walk-ins and track live session countdown timers.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="admin-pwa-matrix"></div>
+            </div>
+            
+            <!-- TAB 2: Inventory Slot Manager (With Block/Unblock) -->
+            <div class="space-y-6 pt-10 border-t border-slate-800">
+                <div>
+                    <h3 class="text-lg font-heading font-bold text-white">Inventory Slot Manager</h3>
+                    <p class="text-xs text-slate-400">Lock specific slots for WhatsApp bookings, or block stations for maintenance.</p>
+                </div>
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-800/60 text-slate-400 text-xs uppercase tracking-wider font-mono">
+                                    <th class="p-4 font-semibold border-b border-slate-700">Time Slot</th>
+                                    <th class="p-4 font-semibold border-b border-slate-700">Screen 1 (PS5)</th>
+                                    <th class="p-4 font-semibold border-b border-slate-700">Screen 2 (PS5)</th>
+                                    <th class="p-4 font-semibold border-b border-slate-700">Racing Rig</th>
+                                    <th class="p-4 font-semibold border-b border-slate-700">VR Station</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-inventory-body" class="divide-y divide-slate-800/60 font-mono text-xs"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admin Walk-In Modal (Untouched) -->
+    <div id="admin-manual-booking-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 max-w-sm w-full space-y-5">
+            <h3 class="text-base font-heading font-bold text-white">Start 1Hr Session (Walk-In)</h3>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-slate-400 font-mono mb-1 text-xs">STATION (16:00 SLOT)</label>
+                    <select id="modal-station-select" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white"></select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-mono mb-1 text-xs">PLAYER NAME</label>
+                    <input type="text" id="modal-walkin-name" placeholder="Walk-In Customer" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white">
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeModal('admin-manual-booking-modal')" class="flex-1 py-2.5 border border-slate-800 rounded-xl text-slate-400 text-xs">Cancel</button>
+                <button onclick="submitManualBooking()" class="flex-1 py-2.5 bg-gaming-accent text-white font-bold rounded-xl text-xs">Start Timer</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin WhatsApp Lock Modal (Untouched) -->
+    <div id="admin-lock-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 max-w-sm w-full space-y-5">
+            <h3 class="text-base font-heading font-bold text-white">Lock Slot (WhatsApp Advance)</h3>
+            <div class="text-gaming-cyan text-center bg-slate-900 p-2 rounded border border-slate-800 font-mono text-sm">
+                <span id="lock-modal-station"></span> @ <span id="lock-modal-time"></span>
+            </div>
+            <div>
+                <label class="block text-slate-400 font-mono mb-1 text-xs">PLAYER NAME</label>
+                <input type="text" id="lock-modal-cust-name" placeholder="Name from WhatsApp" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white">
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeModal('admin-lock-modal')" class="flex-1 py-2.5 border border-slate-800 rounded-xl text-slate-400 text-xs">Cancel</button>
+                <button onclick="confirmAdminInventoryLock()" class="flex-1 py-2.5 bg-gaming-cyan text-black font-bold rounded-xl text-xs">Confirm Lock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. APPLICATION LOGIC                       -->
+    <!-- UNTOUCHED CALIBRATION & ENGINE INTEGRATION -->
+    <!-- ========================================== -->
+    <script>
+        const arenaStations = [
+            { id: 1, name: 'Screen 1 (PS5 4K)', type: 'playstation', rate: 150 },
+            { id: 2, name: 'Screen 2 (PS5 Standard)', type: 'playstation', rate: 120 },
+            { id: 3, name: 'Racing Rig Simulator', type: 'racing', rate: 200 },
+            { id: 4, name: 'VR Station (Quest 3)', type: 'vr', rate: 250 }
+        ];
+
+        const initialSlots = ['16:00', '17:00', '18:00', '19:00', '20:00'];
+        const currentActiveHour = '16:00'; // Simulation target for timers
+        const stationSchedule = {};
+        let totalRevenueToday = 0;
+
+        function initializeSchedule() {
+            arenaStations.forEach(station => {
+                stationSchedule[station.id] = { times: {} };
+                initialSlots.forEach(time => {
+                    stationSchedule[station.id].times[time] = { status: 'available', customer: null, timeLeft: 0, rate: station.rate };
+                });
+            });
+            // Pre-load demo state (VR starts blocked to prove the Unblock button works)
+            stationSchedule[1].times['17:00'] = { status: 'booked', customer: 'Vikas', timeLeft: 0, rate: 150 };
+            stationSchedule[4].times['16:00'] = { status: 'blocked', customer: 'Maintenance', timeLeft: 0, rate: 250 };
+        }
+        
+        // CUSTOMER FRONTEND (UPGRADED WITH GTA 6 VISUAL CARDS)
+        function renderFrontendStorefront() {
+            const grid = document.getElementById('storefront-grid');
+            grid.innerHTML = '';
+            arenaStations.forEach(station => {
+                const card = document.createElement('div');
+                card.className = "glass-panel rounded-2xl p-6 border border-white/10 hover:border-vice-pink transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:shadow-neon-pink";
+                card.onclick = () => openBookingModal(station.id);
+                
+                let icon = station.type === 'racing' ? 'fa-car-side' : (station.type === 'vr' ? 'fa-vr-cardboard' : 'fa-gamepad');
+                let tag = station.type === 'racing' ? 'Force Feedback' : (station.type === 'vr' ? '6DOF Wireless' : 'DualSense Edge');
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-vice-pink/15 text-vice-pink border border-vice-pink/30 flex justify-center items-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid ${icon}"></i>
+                            </div>
+                            <span class="font-tech text-[10px] text-vice-cyan uppercase font-bold tracking-widest px-2.5 py-1 rounded bg-white/5 border border-white/10">
+                                ${tag}
+                            </span>
+                        </div>
+                        <h3 class="font-vice font-black text-xl text-white gta-skew uppercase mb-1 group-hover:text-vice-pink transition-colors">
+                            ${station.name}
+                        </h3>
+                        <p class="font-sans text-xs text-gray-400 mb-6 leading-relaxed">
+                            Ultra-fast 120Hz refresh rates, low input lag, and private ergonomic recliner seating.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-tech text-gray-500 uppercase block">Hour Rate</span>
+                            <span class="font-vice font-black text-lg text-vice-gold tracking-tight">₹${station.rate}</span>
+                        </div>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-vice-pink text-white font-tech font-bold uppercase text-[10px] tracking-wider rounded-lg transition">
+                            Book Slot →
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        let selectedStationId = null;
+        let selectedHourSlot = null;
+
+        function openBookingModal(id) {
+            selectedStationId = id;
+            selectedHourSlot = null;
+            document.getElementById('modal-station-title').innerText = arenaStations.find(s => s.id === id).name;
+            document.getElementById('whatsapp-btn').disabled = true;
+            renderModalTimeGrid(id);
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function renderModalTimeGrid(id) {
+            const grid = document.getElementById('modal-time-grid');
+            grid.innerHTML = '';
+            initialSlots.forEach(time => {
+                const slot = stationSchedule[id].times[time];
+                const btn = document.createElement('button');
+                if (slot.status === 'available') {
+                    if (selectedHourSlot === time) {
+                        btn.className = 'p-3 border border-vice-pink bg-vice-pink text-white font-tech font-bold rounded-xl flex flex-col items-center justify-center h-14 relative shadow-neon-pink';
+                        btn.innerHTML = `${time}<span class="text-[9px] absolute top-1 right-1"><i class="fa-solid fa-check"></i></span>`;
+                    } else {
+                        btn.className = 'p-3 border border-white/15 text-gray-200 hover:border-vice-cyan hover:text-vice-cyan bg-white/5 rounded-xl flex flex-col items-center justify-center h-14 transition font-tech';
+                        btn.innerText = time;
+                        btn.onclick = () => { selectedHourSlot = time; renderModalTimeGrid(id); document.getElementById('whatsapp-btn').disabled = false; };
+                    }
+                } else {
+                    btn.className = 'p-3 border border-white/5 bg-black/40 text-gray-600 rounded-xl flex flex-col items-center justify-center h-14 cursor-not-allowed opacity-40 font-tech';
+                    btn.innerHTML = `${time}<span class="text-[8px] mt-0.5">${slot.status === 'blocked' ? 'Down' : 'Taken'}</span>`;
+                    btn.disabled = true;
+                }
+                grid.appendChild(btn);
+            });
+        }
+
+        function generateWhatsApp() {
+            const game = document.getElementById('cust-input-game').value;
+            const name = document.getElementById('cust-input-name').value || "Player";
+            const station = arenaStations.find(s => s.id === selectedStationId).name;
+            const msg = `Hi Nexora Gaming Arena (Connaught Place),%0A%0AI would like to book a slot:%0A*Station:* ${station}%0A*Slot Time:* ${selectedHourSlot}%0A*Game Selected:* ${game}%0A*Player Handle:* ${name}%0A%0APlease provide your UPI details to confirm the slot.`;
+            // Nexora Agency Target Pipeline (Replace with arena desk number for production client)
+            window.open(`https://wa.me/919999999999?text=${msg}`, '_blank');
+            closeModal('booking-modal');
+        }
+
+        // OWNER DASHBOARD (IDENTICAL TO arena_lite_demo.html)
+        function renderAdminInventoryView() {
+            const tbody = document.getElementById('admin-inventory-body');
+            tbody.innerHTML = '';
+            
+            initialSlots.forEach(time => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="p-4 font-bold text-white border-b border-slate-800">${time}</td>`;
+                
+                arenaStations.forEach(station => {
+                    const slot = stationSchedule[station.id].times[time];
+                    const td = document.createElement('td');
+                    td.className = "p-4 border-b border-slate-800";
+                    
+                    if (slot.status === 'available') {
+                        td.innerHTML = `
+                            <div class="flex gap-2">
+                                <button onclick="openInventoryLockModal(${station.id}, '${station.name}', '${time}')" class="px-2 py-1 bg-white text-black font-bold text-[10px] rounded hover:bg-gaming-cyan flex items-center"><i class="fa-solid fa-lock mr-1"></i> Lock</button>
+                                <button onclick="toggleMaintenanceBlock(${station.id}, '${time}')" class="px-2 py-1 bg-slate-800 text-red-400 border border-red-900/50 font-bold text-[10px] rounded hover:bg-red-900/30 flex items-center"><i class="fa-solid fa-ban mr-1"></i> Block</button>
+                            </div>
+                        `;
+                    } else if (slot.status === 'booked') {
+                        td.innerHTML = `<span class="px-2 py-1 rounded bg-blue-950 text-blue-300 border border-blue-500/30 text-[10px] font-bold cursor-pointer" onclick="cancelBooking(${station.id}, '${time}')">Booked (${slot.customer}) ✖</span>`;
+                    } else if (slot.status === 'walkin') {
+                        td.innerHTML = `<span class="px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">Active Timer</span>`;
+                    } else { // Blocked
+                        td.innerHTML = `<button onclick="toggleMaintenanceBlock(${station.id}, '${time}')" class="px-2 py-1 bg-red-950 text-emerald-400 border border-emerald-500/30 font-bold text-[10px] rounded hover:bg-emerald-900 flex items-center"><i class="fa-solid fa-unlock mr-1"></i> Unblock</button>`;
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminPwaMatrix() {
+            const container = document.getElementById('admin-pwa-matrix');
+            container.innerHTML = '';
+            document.getElementById('modal-station-select').innerHTML = '';
+            let activeCount = 0;
+
+            arenaStations.forEach(station => {
+                const slot = stationSchedule[station.id].times[currentActiveHour];
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 rounded-xl border border-slate-800 p-5 space-y-3 flex flex-col justify-between";
+                let icon = station.type === 'racing' ? 'fa-car-side' : (station.type === 'vr' ? 'fa-vr-cardboard' : 'fa-playstation');
+
+                if(slot.status === 'available') {
+                    const opt = document.createElement('option');
+                    opt.value = station.id; opt.innerText = station.name;
+                    document.getElementById('modal-station-select').appendChild(opt);
+                }
+
+                if (slot.status === 'walkin') {
+                    activeCount++;
+                    const isExpiring = slot.timeLeft < 300;
+                    card.className += isExpiring ? ' border-l-4 border-l-gaming-accent pulse-red' : ' border-l-4 border-l-gaming-cyan';
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid ${icon} text-2xl text-gaming-cyan"></i>
+                            <div><h4 class="font-bold text-white text-sm">${station.name}</h4><p class="text-[10px] text-gray-400">16:00 Walk-In</p></div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-gray-500 font-mono">COUNTDOWN</div>
+                            <div class="text-3xl font-heading font-black ${isExpiring ? 'text-gaming-accent' : 'text-gaming-cyan'}">${formatTime(slot.timeLeft)}</div>
+                        </div>
+                        <button onclick="endWalkin(${station.id})" class="w-full py-2 bg-white text-black font-bold rounded flex justify-center items-center gap-2 text-xs hover:bg-gaming-cyan"><i class="fa-solid fa-cash-register"></i> Collect ₹${slot.rate}</button>
+                    `;
+                } else if (slot.status === 'booked') {
+                    activeCount++;
+                    card.className += " border-l-4 border-l-amber-500";
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid ${icon} text-2xl text-amber-500"></i>
+                            <div><h4 class="font-bold text-white text-sm">${station.name}</h4><p class="text-[10px] text-amber-300">WhatsApp Booked</p></div>
+                        </div>
+                        <div class="bg-slate-800 p-2 rounded text-xs"><span class="text-gray-400">Player:</span> ${slot.customer}</div>
+                        <button onclick="convertBookingToWalkin(${station.id})" class="w-full py-2 bg-amber-500 text-black font-bold rounded text-xs">Check-In & Start Timer</button>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid ${icon} text-2xl text-slate-700"></i>
+                            <div><h4 class="font-bold text-slate-300 text-sm">${station.name}</h4><p class="text-[10px] ${slot.status==='available' ? 'text-emerald-400' : 'text-red-400'}">${slot.status==='available' ? 'Available' : 'Offline/Blocked'}</p></div>
+                        </div>
+                        <div class="text-xs text-slate-600 text-center py-4">No Session</div>
+                        <button onclick="openManualBookingModal()" class="w-full py-2 border border-slate-700 text-slate-400 rounded text-xs hover:text-white" ${slot.status === 'blocked' ? 'disabled' : ''}>+ Walk-In</button>
+                    `;
+                }
+                container.appendChild(card);
+            });
+            document.getElementById('kpi-active-screens').innerText = `${activeCount} / 4`;
+            document.getElementById('kpi-total-revenue').innerText = `₹${totalRevenueToday}`;
+        }
+
+        // ACTIONS
+        function toggleMaintenanceBlock(stationId, time) {
+            const current = stationSchedule[stationId].times[time].status;
+            stationSchedule[stationId].times[time].status = (current === 'blocked') ? 'available' : 'blocked';
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        function cancelBooking(stationId, time) {
+            stationSchedule[stationId].times[time] = { status: 'available', customer: null, timeLeft: 0, rate: arenaStations.find(s=>s.id===stationId).rate };
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        function openManualBookingModal() { document.getElementById('admin-manual-booking-modal').classList.remove('hidden'); }
+        
+        function submitManualBooking() {
+            const id = parseInt(document.getElementById('modal-station-select').value);
+            const name = document.getElementById('modal-walkin-name').value || 'Walk-In';
+            stationSchedule[id].times[currentActiveHour] = { status: 'walkin', customer: name, timeLeft: 3600, rate: arenaStations.find(s=>s.id===id).rate };
+            closeModal('admin-manual-booking-modal');
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        function convertBookingToWalkin(id) {
+            stationSchedule[id].times[currentActiveHour].status = 'walkin';
+            stationSchedule[id].times[currentActiveHour].timeLeft = 3600;
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        function endWalkin(id) {
+            totalRevenueToday += stationSchedule[id].times[currentActiveHour].rate;
+            stationSchedule[id].times[currentActiveHour].timeLeft = 0;
+            stationSchedule[id].times[currentActiveHour].status = 'available';
+            stationSchedule[id].times[currentActiveHour].customer = null;
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        let lockTarget = { id: null, time: null };
+        function openInventoryLockModal(id, name, time) {
+            lockTarget = { id, time };
+            document.getElementById('lock-modal-station').innerText = name;
+            document.getElementById('lock-modal-time').innerText = time;
+            document.getElementById('lock-modal-cust-name').value = '';
+            document.getElementById('admin-lock-modal').classList.remove('hidden');
+        }
+
+        function confirmAdminInventoryLock() {
+            const name = document.getElementById('lock-modal-cust-name').value || "WhatsApp";
+            stationSchedule[lockTarget.id].times[lockTarget.time] = { status: 'booked', customer: name, timeLeft: 0, rate: arenaStations.find(s=>s.id===lockTarget.id).rate };
+            closeModal('admin-lock-modal');
+            renderAdminDashboard();
+            renderFrontendStorefront();
+        }
+
+        // TIMER ENGINE
+        setInterval(() => {
+            let needsRender = false;
+            arenaStations.forEach(station => {
+                const slot = stationSchedule[station.id].times[currentActiveHour];
+                if (slot && slot.status === 'walkin' && slot.timeLeft > 0) {
+                    slot.timeLeft--;
+                    needsRender = true;
+                }
+            });
+            if (needsRender && document.getElementById('owner-view').classList.contains('block')) {
+                renderAdminPwaMatrix();
+            }
+        }, 1000);
+
+        function formatTime(sec) {
+            return `${Math.floor(sec/60).toString().padStart(2,'0')}:${(sec%60).toString().padStart(2,'0')}`;
+        }
+        
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        
+        function toggleView() {
+            const c = document.getElementById('customer-view'); 
+            const o = document.getElementById('owner-view');
+            if(c.classList.contains('block')) { 
+                c.classList.replace('block','hidden'); 
+                o.classList.replace('hidden','block'); 
+                renderAdminDashboard(); 
+            } else { 
+                o.classList.replace('block','hidden'); 
+                c.classList.replace('hidden','block'); 
+                renderFrontendStorefront(); 
+            }
+        }
+        
+        function renderAdminDashboard() { 
+            renderAdminInventoryView(); 
+            renderAdminPwaMatrix(); 
+        }
+
+        initializeSchedule();
+        renderFrontendStorefront();
+    </script>
+</body>
+</html>
